@@ -15,7 +15,8 @@ import dev.langchain4j.service.spring.AiServiceWiringMode;
 @AiService(
         wiringMode = AiServiceWiringMode.EXPLICIT,
         chatModel = "openAiChatModel",
-        chatMemoryProvider = "chatMemoryProviderXiaoZhi"
+        chatMemoryProvider = "chatMemoryProviderXiaoZhi",
+        tools = "appointmentTools"
 )
 public interface XiaoZhiAgent {
 
