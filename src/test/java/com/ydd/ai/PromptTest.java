@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * description
+ * 提示词测试类
  *
  * @author yangjx
  * @date 2025年07月21日 13:53

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * description
+ * Function calling 测试类
  *
  * @author yangjx
  * @date 2025年07月21日 16:49
@@ -38,4 +38,5 @@ public class ToolsTest {
         //答案：3，689706.4865
         System.out.println(answer);
     }
+
 }
