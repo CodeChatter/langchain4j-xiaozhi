@@ -1,6 +1,7 @@
 package com.ydd.ai;
 
 import com.ydd.ai.assistant.Assistant;
+import dev.langchain4j.community.model.dashscope.QwenChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.service.AiServices;
 import org.junit.jupiter.api.Test;
@@ -39,4 +40,16 @@ public class AIServiceTest {
         System.out.println(answer);
     }
 
+
+    @Autowired
+    private QwenChatModel qwenChatModel;
+
+    @Test
+    public void testChatQwen() {
+        //创建AIService
+        Assistant assistant = AiServices.create(Assistant.class, qwenChatModel);
+        //调用service的接口
+        String answer = assistant.chat("Hello");
+        System.out.println(answer);
+    }
 }

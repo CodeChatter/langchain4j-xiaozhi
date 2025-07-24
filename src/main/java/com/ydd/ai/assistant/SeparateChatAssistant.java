@@ -15,7 +15,8 @@ import dev.langchain4j.service.spring.AiServiceWiringMode;
  */
 @AiService(
         wiringMode = AiServiceWiringMode.EXPLICIT,
-        chatModel = "openAiChatModel",
+//        chatModel = "openAiChatModel",
+        chatModel = "qwenChatModel",
         chatMemoryProvider = "chatMemoryProvider",
         tools = "calculatorTools" // 指定工具类
 )
