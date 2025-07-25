@@ -1,12 +1,16 @@
 package com.ydd.ai.tools;
 
+import cn.hutool.core.util.IdcardUtil;
 import com.ydd.ai.entity.Appointment;
 import com.ydd.ai.service.AppointmentService;
 import dev.langchain4j.agent.tool.P;
 import dev.langchain4j.agent.tool.Tool;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Functional tools for managing appointments.
@@ -29,6 +33,9 @@ public class AppointmentTools {
         if (appointmentDB == null) {
             // 防止大模型幻觉设置了id
             appointment.setId(null);
+            if (!IdcardUtil.isValidCard(appointment.getIdCard())) {
+                return "身份证号码不合法，请重新输入";
+            }
             if (appointmentService.save(appointment)) {
                 return "预约成功，并返回预约详情";
             } else {
@@ -72,6 +79,19 @@ public class AppointmentTools {
         //如果指定了医生名字，则判断医生是否有排班（没有排版返回false）
         //如果有排班，则判断医生排班时间段是否已约满（约满返回false，有空闲时间返回true）
         return true;
+    }
+
+    @Tool(name = "query_appointments_by_user_name", value = "根据科医生姓名查看自己的预约记录")
+    public List<Appointment> getAppointmentsByUser(
+            @P(value = "医生姓名", required = true) String doctorName,
+            @P(value = "身份证号", required = false) String idCard
+    ) {
+        // 查询用户的所有预约记录
+        return appointmentService.lambdaQuery()
+                .eq(Appointment::getUsername, doctorName)
+                .eq(StringUtils.isNotEmpty(idCard), Appointment::getIdCard, idCard)
+                .list();
+
     }
 
 
